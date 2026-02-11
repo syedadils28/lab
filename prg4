@@ -1,0 +1,205 @@
+A country wants to conduct an election for the parliament. A country having 
+many constituencies
+
+4.
+
+table: constituency
+
+	create table CONSTITUENCY 
+	(CID varchar(10)primary key,
+	Cname varchar(10),
+	State varchar(10),
+	No_of_voters number(10)
+	);
+
+	insert into CONSTITUENCY(CID,Cname,state,no_of_voters)
+	values('C001','Banglore','KAR',2);
+	insert into CONSTITUENCY(CID,Cname,state,no_of_voters)
+	values('C002','Chennai','TN',1);
+	insert into CONSTITUENCY(CID,Cname,state,no_of_voters)
+	values('C003','Hydrabad','AP',1);
+	insert into CONSTITUENCY(CID,Cname,state,no_of_voters)
+	values('C004','Kochi','Kerala',1);
+	insert into CONSTITUENCY(CID,Cname,state,no_of_voters)
+	values('C005','Agra','UP',1);
+	insert into CONSTITUENCY(CID,Cname,state,no_of_voters)
+	values('C006','Shivamogga','KAR',1);
+	insert into CONSTITUENCY(CID,Cname,state,no_of_voters)
+	values('C007','Hassan','KAR',1);
+
+------------------------------------------------------------------------
+CID	CNAME		STATE	NO_OF_VOTERS
+C001	Banglore		KAR	2
+C002	Chennai		TN	1
+C003	Hydrabad		AP	1
+C004	Kochi		Kerala	1
+C005	Agra		UP	1
+C006	Shivamogga	KAR	1
+C007	Hassan		KAR	1
+-----------------------------------------------------------------------------
+table: voter
+
+	create table VOTER
+	(
+	Vid varchar(10)primary key,
+	Vname varchar(10),
+	Age number(2),
+	HON number(5),
+	City varchar(10),
+	State varchar(10),
+	Pincode number(10),
+	Cid varchar(10)references constituency
+	);
+
+	insert into voter(Vid,Vname,Age,HNO,City,State,Pincode,Cid)
+	values('V001','Prayathi',24,351,'Banglore','KAR',677201,'C001');
+	insert into voter(Vid,Vname,Age,HNO,City,State,Pincode,Cid)
+	values('V002','Anitsh',31,492,'Kochi','Kerale',876967,'C002');
+	insert into voter(Vid,Vname,Age,HNO,City,State,Pincode,Cid)
+	values('V003','Unnathi',19,104,'Banflore','KAR',564677,'C003');
+	insert into voter(Vid,Vname,Age,HNO,City,State,Pincode,Cid)
+	values('V004','Prahjal',42,55,'Chennai','TN',988755,'C004');
+	insert into voter(Vid,Vname,Age,HNO,City,State,Pincode,Cid)
+	values('V005','Risha',18,61,'Agra','UP',453432,'C005');
+	insert into voter(Vid,Vname,Age,HNO,City,State,Pincode,Cid)
+	values('V006','Sanmathi',48,48,'Shimoga','KAR',875477,'C006');
+	insert into voter(Vid,Vname,Age,HNO,City,State,Pincode,Cid)
+	values('V007','Stalin',27,309,'Hydravod','AP', 245467,'C006');
+
+--------------------------------------------------------------------------------------------------------------------
+VID	VNAME	AGE	HOD	CITY	STATE	PINCODECID
+V001	Prayathi	24	351	Banglore	KAR	677201	C001
+V002	Anitsh	31	492	Kochi	Kerale	876967	C002
+V003	Unnathi	19	104	Banflore	KAR	564677	C003
+V004	Prahjal	42	55	Chennai	TN	988755	C004
+V005	Risha	18	61	Agra	UP	453432	C005
+V006	Sanmathi	48	48	Shimoga	KAR	875477	C006
+V007	Stalin	27	309	Hydravod	AP	245467	C006
+-----------------------------------------------------------------------------------------------------------------------
+
+table: party
+
+	create table PARTY
+	(Pid varchar(10)primary key,
+	Pname varchar(10),
+	Symbole varchar(10));
+
+	insert into party(pid,pname,symbole)values('P001','BJP','Lotus');
+	insert into party(pid,pname,symbole)values('P002','Congress','Hand');
+	insert into party(pid,pname,symbole)values('P003','JDS','Grass');
+	insert into party(pid,pname,symbole)values('P004','AIADMK','Cycle');
+
+--------------------------------------------------
+PID	PNAME	SYMBOLE
+P001	BJP	Lotus
+P002	Congress	Hand
+P003	JDS	Grass
+P004	AIADMK	Cycle
+--------------------------------------
+table : candidate
+
+ 	create table CANDIDATE
+	(Canid varchar(10)primary key,
+	Cdname varchar(10),
+	Age number(2),
+	Phone number(10),
+	State varchar(10),
+	Pid varchar(10)references party);
+
+
+	insert into candidate values('CD001','Kumar',59,6348174855,'TN',P004');
+	insert into candidate values('CD002','Eshwar',62,5344758388,'KAR','P001');
+	insert into candidate values('CD003','Rohini',36,9745985799,'KAR','P001');
+	insert into candidate values('CD004','Vinay',47,8453533356,'UP','P002');
+	insert into candidate values('CD005','Pranathi',51,6586388329,'Kerala','P003');
+
+------------------------------------------------------------------------------------------
+CANID	CDNAME	AGE	PHONE		STATE	PID
+CD002	Eshwar	62	5344758388	KAR	P001
+CD003	Rohini	36	9745985799	KAR	P001
+CD004	Vinay	47	8453533356	UP	P002
+CD005	Pranathi	51	6586388329	Kerala	P003
+CD001	Kumar	59	6348174855	TN	P004
+-------------------------------------------------------------------------------------------
+
+table: cantest
+
+	create table  CONTEST
+	(
+	Canid varchar(10)references candidate,
+	Cid varchar(10)references constituency
+	);
+
+
+	insert into contest(Canid,Cid)values('CD002','C001');
+	insert into contest(Canid,Cid)values('CD002','C006');
+	insert into contest(Canid,Cid)values('CD002','C002');
+	insert into contest(Canid,Cid)values('CD003','C006');
+	insert into contest(Canid,Cid)values('CD005','C004');
+
+---------------------------
+CANID	CID
+CD002	C001
+CD002	C006
+CD002	C002
+CD003	C006
+CD005	C004
+----------------------------
+
+question 
+
+i. list the detais of the candidate who are conteston from more than ane constituencies which are belange to different stotes
+
+select * from candidate
+where Canid in(select canid from contest ct,constituency co
+where co.cid=ct.cid group by canid having count(distinct state)>1);
+
+---------------------------------------------------------------------------------------
+CANID	CDNAME	AGE	PHONE		STATE	PID
+CD002	Eshwar	62	5344758388	KAR	P001
+-----------------------------------------------------------------------------------------
+
+
+ii. display the state name having maxiumun number of constitiuencies
+
+select state from constituency 
+group by state having count(*)=(select MAX (count(*))
+from constituency group by state);
+-------------
+STATE
+KAR
+--------
+
+iii.
+
+create or replace procedure checkage(vid in varchar,
+vname in varchar,
+age in number,
+hno in number,
+city in varchar,
+state in varchar,
+pincode in number,
+cid in varchar)is begin
+if   age<18 then
+dbms_output.put_line('age is less than 18 record can not be inserted');
+else
+insert into voter values(vid,vname,age,hno,city,state,pincode,cid);
+commit;
+dbms_output.put_line('record insereted successfully');
+end if;
+end;
+
+Procedure created.
+
+EXECUTION;
+
+call checkage ('V008','Aarushi',17,309,'Hydreabod','AP',352719,'C003');
+
+Call completed.
+
+iv.
+create  or replace procedure votercount(cons in varchar) as cnt number (10);
+begin 
+select no_of_voters into cnt from constituency
+where (name=cons; dbms_output.put_line('no_of_voters in '|| cons||' constituency' || ' cnt );
+end;

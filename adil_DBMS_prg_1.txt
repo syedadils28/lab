@@ -1,0 +1,1204 @@
+create table BRANCH
+(
+branchid varchar(10)primary key,
+branchname varchar(10),
+hod varchar(10)
+);
+
+insert into branch (branchid,branchname,hod)
+values('B01','MCA','ADO');
+
+--------------------------------------------------------------------------------------------
+BRANCHID	BRANCHNAME	HOB
+B01		MCA		ADO
+B02		MBA		ABC
+B03		Mtech		xyz
+B04		BE		PQR
+B05		Bcom		MNO
+--------------------------------------------------------------------------------------------
+create table STUDENT
+(
+usn varchar(10)primary key,
+name varchar(10),
+adress varchar(50),
+branchid varchar(10)references BRANCH,
+sem number(1)
+);
+
+DESCR STUDENT
+
+	insert into STUDENT(usn, name, adress, branchid, sem)
+	values('4JN17MCA37', 'suraksha', '#20, vinobam', 'B01',2);
+
+	insert into STUDENT(usn, name, adress, branchid, sem)
+	values('4JN17MCA08', 'anamya', '#5, hudco', 'B01',1);
+
+	insert into STUDENT(usn, name, adress, branchid, sem)
+	values('4JN17MCA10', 'namitha', '#, gopala', 'B02',2);
+
+	insert into STUDENT(usn, name, adress, branchid, sem)
+	values('4JN17MCA01', 'samanya', '#, bhadravathi', 'B02',1);
+
+	select * from student;
+--------------------------------------------------------------------------------------------
+USN		NAME	ADRESS		BRANCHID	SEM
+4JN17MCA11	jishi	#9,kalalli		B01		2
+4JN17MCA37	suraksha	#20, vinobam	B01		2
+4JN17MCA08	anamya	#5, hudco		B01		1
+4JN17MCA10	namitha	#, gopala		B02		2
+4JN17MCA01	samanya	#, bhadravathi	B02		1
+--------------------------------------------------------------------------------------------
+
+create table AUTHOR
+(
+authorid varchar(10)primary key,
+authorname varchar(20),
+country varchar(10),
+age number(2)
+);
+
+DESCR AUTHOR
+	insert into author(authorid, authorname, country, age)
+	values('A01', 'elmasri navathe', 'india', '44');
+
+	insert into author(authorid, authorname, country, age)
+	values('A02', 'balguru swami', 'india', '50');
+
+	insert into author(authorid, authorname, country, age)
+	values('A03', 'girimaldi', 'india', '40');
+
+	insert into author(authorid, authorname, country, age)
+	values('A04', 'sumitabadas', 'india', '36');
+
+	insert into author(authorid, authorname, country, age)
+	values('A05', 'K R venugopa', 'india', '54');
+
+	insert into author(authorid, authorname, country, age)
+	values('A06', 'dennis richic', 'india', '60');
+
+	select * from author
+--------------------------------------------------------------------------------------------
+AUTHORID	AUTHORNAME	COUNTRY	AGE
+A01		elmasri navathe	india		44
+A02		balguru swami	india		50
+A03		girimaldi		india		40
+A04		sumitabadas	india		36
+A05		K R venugopa	india		54
+A06		dennis richic	india		60
+--------------------------------------------------------------------------------------------
+
+create table BOOK 
+(
+bookid varchar(10)primary key,
+bookname varchar(10),
+authorid varchar(10)references author,
+publisher varchar(10),
+branchid varchar(10)references branch
+);
+
+DESCR BOOK;
+
+	insert into book(bookid, bookname, authorid, publisher, branchid)
+	values('BK01','DBMS','A01','KJF','B01');
+
+	insert into book(bookid, bookname, authorid, publisher, branchid)
+	values('BK02','OOP','A05','UVW','B01');
+
+	insert into book(bookid, bookname, authorid, publisher, branchid)
+	values('BK03','DMS','A03','KJF','B01');
+
+	insert into book(bookid, bookname, authorid, publisher, branchid)
+	values('BK04','UNIX','A04','OPQ','B01');
+
+	insert into book(bookid, bookname, authorid, publisher, branchid)
+	values('BK05','C++','A02','KJF','B01');
+
+	select * from book;
+--------------------------------------------------------------------------------------------
+BOOKID	BOOKNAME	AUTHORID	PUBLISHER	BRANCHID
+BK01	DBMS		A01		KJF		B01
+BK02	OOP		A05		UVW		B01
+BK03	DMS		A03		KJF		B01
+BK04	UNIX		A04		OPQ		B01
+BK05	C++		A02		KJF		B01
+--------------------------------------------------------------------------------------------
+
+create table BORROW
+(
+usn varchar(10)references STUDENT,
+bookid varchar(10)references BOOK,
+borrowdate date
+);
+
+DESCR BORROW;
+
+	insert into borrow (usn,bookid, borrowdate)
+	values('4JN17MCA11','BK01', '03-APR-18');
+	
+	insert into borrow (usn,bookid, borrowdate)
+	values('4JN17MCA11','BK03', '04-MAR-18');
+
+	insert into borrow (usn,bookid, borrowdate)
+	values('4JN17MCA37','BK02', '11-JAN-18');
+
+	insert into borrow (usn,bookid, borrowdate)
+	values('4JN17MCA08','BK04', '05-FEB-18');
+
+	insert into borrow (usn,bookid, borrowdate)
+	values('4JN17MCA37','BK01', '14-JUN-18');
+
+	insert into borrow (usn,bookid, borrowdate)
+	values('4JN17MCA11','BK05', '11-MAY-18');
+	
+	select * from borrow;
+--------------------------------------------------------------------------------------------
+USN		BOOKID		BORROWDATE
+4JN17MCA11	BK01		03-APR-18
+4JN17MCA11	BK03		04-MAR-18
+4JN17MCA37	BK02		11-JAN-18
+4JN17MCA08	BK04		05-FEB-18
+4JN17MCA37	BK01		14-JUN-18
+4JN17MCA11	BK05		11-MAY-18
+
+--------------------------------------------------------------------------------------------
+
+FOLLOWING Q
+
+a).list the details of student who are all studying in 2nd sem MCA
+
+	select usn, name,adress
+	from STUDENT s, BRANCH b
+	where s.branchid=b.branchid and sem=2 and branchname='MCA';
+--------------------------------------------------------------------------------------------
+USN		NAME		ADRESS
+4JN17MCA11	jishi		#9,kalalli
+4JN17MCA37	suraksha		#20, vinobam
+--------------------------------------------------------------------------------------------
+
+b). list the student who are not borrowed only books
+
+	select name 
+	from STUDENT s
+	where NOT EXISTS
+	(select * from BORROW b where usn=s.usn);
+--------------------------------------------------------------------------------------------
+NAME
+samanya
+namitha
+--------------------------------------------------------------------------------------------
+
+c).display the usn, studentname, branchname, bookname, authorname, books borrowed date fo 2nd sem MCA student.
+
+	select s.usn, name, branchname, bookname, authorname, borrowdate 
+	from BRANCH b, STUDENT s, BOOK bk, AUTHOR a, BORROW br
+	where s.branchid=b.branchid and br.usn=s.usn and bk.bookid=br.bookid and bk.authorid=a.authorid and sem=2 and 	branchname='MCA';
+--------------------------------------------------------------------------------------------
+USN		NAME	BRANCHNAME	BOOKNAME	AUTHORNAME	BORROWDATE
+4JN17MCA11	jishi	MCA		DBMS		elmasri navathe	03-APR-18
+4JN17MCA11	jishi	MCA		DMS		girimaldi		04-MAR-18
+4JN17MCA37	suraksha	MCA		OOP		K R venugopa	11-JAN-18
+4JN17MCA37	suraksha	MCA		DBMS		elmasri navathe	14-JUN-18
+4JN17MCA11	jishi	MCA		C++		balguru swami	11-MAY-18
+--------------------------------------------------------------------------------------------
+
+d).display the bumber fo books written by each author.
+	
+	select authorname, count(*)
+	from author a, book bk
+	where a.authorid=bk.authorid
+	group by authorname;
+--------------------------------------------------------------------------------------------
+AUTHORNAME	COUNT(*)
+K R venugopa	1
+balguru swami	1
+elmasri navathe	1
+girimaldi		1
+sumitabadas	1
+--------------------------------------------------------------------------------------------
+
+e).display the student details who borrowed more then two books.
+
+	select * from STUDENT s
+	where(select count(*)
+	from BORROW br
+	where br.usn=s.usn)>2;
+--------------------------------------------------------------------------------------------
+USN		NAME	ADRESS	BRANCHID	SEM
+4JN17MCA11	jishi	#9,kalalli	B01		2
+--------------------------------------------------------------------------------------------
+
+f).display the book names in descending order of their names
+
+	select * from STUDENT s
+	where(select count(DISTINCT a.authorid)
+	from BOOK bk, AUTHOR a, BORROW br
+	where bk.authorid=a.authorid and br.bookid=bk.bookid and br.usn=s.usn)>1;
+--------------------------------------------------------------------------------------------
+USN		NAME	ADRESS		BRANCHID	SEM
+4JN17MCA11	jishi	#9,kalalli		B01		2
+4JN17MCA37	suraksha	#20, vinobam	B01		2
+--------------------------------------------------------------------------------------------
+
+g).display the book names in descending order fo their names
+
+	select bookname
+	from book
+	ORDER BY bookname desc;
+--------------------------------------------------------------------------------------------
+BOOKNAME
+UNIX
+OOP
+DMS
+DBMS
+C++
+--------------------------------------------------------------------------------------------
+
+h).list the details of students who borrowed the books which are all published by the same publisher.
+
+	select * from STUDENT s 
+	where(select count(DISTINCT publisher)
+	from BOOK bk, BORROW br
+	where br.bookid=bk.bookid and br.usn=s.usn)=1 and usn in 
+	(select usn from BORROW GROUP BY usn HAVING count(*)>1);
+
+--------------------------------------------------------------------------------------------
+USN		NAME	ADRESS	BRANCHID	SEM
+4JN17MCA11	jishi	#9,kalalli	B01		2
+--------------------------------------------------------------------------------------------
+
+DROP TABLE STUDENT;
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+2. CREATE TABLE STUDENT1
+
+create table STUDENT1
+(
+	USN varchar(10)primary key,
+	name varchar(20),
+	DOB date,
+	branch varchar(10),
+	marks1 number(3),
+	marks2 number(3),
+	marks3 number(3),
+	total number(3),
+	GPA number(4,2)
+);
+
+	insert into STUDENT1(USN,name,DOB,branch,marks1,marks2,marks3)
+	values('MCA001','Anand','21-MAY-1980','MCA',90,95,98);
+
+	insert into STUDENT1(USN,name,DOB,branch,marks1,marks2,marks3)
+	values('MCA002','Vijay','28-OCT-1980','MCA',80,85,90);
+
+	insert into STUDENT1(USN,name,DOB,branch,marks1,marks2,marks3)
+	values('MCA003','Harish','08-AUG-1978','MBA',72,65,69);
+
+	insert into STUDENT1(USN,name,DOB,branch,marks1,marks2,marks3)
+	values('MCA004','Girish','14-MAR-1980','MBA',60,65,70);
+
+	insert into STUDENT1(USN,name,DOB,branch,marks1,marks2,marks3)
+	values('MCA005','Sachin','10-SEP-1980','MCA',70,80,88);
+
+	insert into STUDENT1(USN,name,DOB,branch,marks1,marks2,marks3)
+	values('MCA006','Kumar','28-MAY-1980','MCA',55,58,62);
+
+USN	NAME	DOB		BRANCH	MARKS1	MARKS2	MARKS3	TOTAL	GPA
+MCA001	Anand	21-MAY-80	MCA	90	95	98		 
+MCA002	Vijay	28-OCT-80	MCA	80	85	90		 
+MCA003	Harish	08-AUG-78	MBA	72	65	69		 
+MCA004	Girish	14-MAR-80	MBA	60	65	70		 
+MCA005	Sachin	10-SEP-80	MCA	70	80	88		 
+MCA006	Kumar	28-MAY-80	MCA	55	58	62		
+
+
+a).update the column total by adding the colums mark1, marks2, marks3.
+
+	update student1 set total =marks1+marks2+marks3;
+	select * from student1
+
+------------------------------------------------------------------------------------------------------------------------------
+USN	NAME	DOB		BRANCH	MARKS1	MARKS2	MARKS3	TOTAL	GPA
+MCA001	Anand	21-MAY-80	MCA	90	95	98	283	 
+MCA002	Vijay	28-OCT-80	MCA	80	85	90	255	 
+MCA003	Harish	08-AUG-78	MBA	72	65	69	206	 
+MCA004	Girish	14-MAR-80	MBA	60	65	70	195	 
+MCA005	Sachin	10-SEP-80	MCA	70	80	88	238	 
+MCA006	Kumar	28-MAY-80	MCA	55	58	62	175	
+------------------------------------------------------------------------------------------------------------------------------
+b).find the gpa score of all the studnt 
+
+	select TRUNC(((marks1+marks2+marks3)/3)/9.5,2) gpa from student1
+
+-----------
+GPA
+9.92
+8.94
+7.22
+6.84
+8.35
+6.14
+------------
+	update student1 set gpa= TRUNC(((marks1+marks2+marks3)/3)/9.5,2)
+
+------------------------------------------------------------------------------------------------------------------------------
+USN	NAME	DOB		BRANCH	MARKS1	MARKS2	MARKS3	TOTAL	GPA
+MCA001	Anand	21-MAY-80	MCA	90	95	98	283	9.92
+MCA002	Vijay	28-OCT-80	MCA	80	85	90	255	8.94
+MCA003	Harish	08-AUG-78	MBA	72	65	69	206	7.22
+MCA004	Girish	14-MAR-80	MBA	60	65	70	195	6.84
+MCA005	Sachin	10-SEP-80	MCA	70	80	88	238	8.35
+MCA006	Kumar	28-MAY-80	MCA	55	58	62	175	6.14
+------------------------------------------------------------------------------------------------------------------------------
+c).find the students who born on a particulur year of birth form the date of birth colum.
+
+	select * from student1 
+	where dob like '_______78';
+
+------------------------------------------------------------------------------------------------------------------------------
+USN	NAME	DOB		BRANCH	MARKS1	MARKS2	MARKS3	TOTAL	GPA
+MCA003	Harish	08-AUG-78	MBA	72	65	69	206	7.22
+------------------------------------------------------------------------------------------------------------------------------
+
+d). list the students who are studging in a where branch = 'MCA';
+
+	select * from student1
+	where branch = 'MCA';
+
+------------------------------------------------------------------------------------------------------------------------------
+USN	NAME	DOB		BRANCH	MARKS1	MARKS2	MARKS3	TOTAL	GPA
+MCA001	Anand	21-MAY-80	MCA	90	95	98	283	9.92
+MCA002	Vijay	28-OCT-80	MCA	80	85	90	255	8.94
+MCA005	Sachin	10-SEP-80	MCA	70	80	88	238	8.35
+MCA006	Kumar	28-MAY-80	MCA	55	58	62	175	6.14
+------------------------------------------------------------------------------------------------------------------------------
+
+e).find the maximum gpa score of the student breanch wise
+
+	select gpa as MAX_GPA,name, branch from student1
+	where gpa in (select max(gpa)
+	from student1 group by branch);
+
+-------------------------------------------------------
+MAX_GPA	NAME	BRANCH
+7.22		Harish	MBA
+9.92		Anand	MCA
+
+---------------------------------------------------------
+
+f).find the student whose name starts with the alphabet "s".
+
+	select * from student1
+	where name like 'S%';
+------------------------------------------------------------------------------------------------------------------------------
+USN	NAME	DOB		BRANCH	MARKS1	MARKS2	MARKS3	TOTAL	GPA
+MCA005	Sachin	10-SEP-80	MCA	70	80	88	238	8.35
+------------------------------------------------------------------------------------------------------------------------------
+
+g).find the student whose name ends with the alphabets "AR".
+
+	select * from student1
+	where name like '%ar';
+
+------------------------------------------------------------------------------------------------------------------------------
+USN	NAME	DOB	BRANCH	MARKS1	MARKS2	MARKS3	TOTAL	GPA
+MCA006	Kumar	28-MAY-80	MCA	55	58	62	175	6.14
+------------------------------------------------------------------------------------------------------------------------------
+
+h).delete the student details whose usn is given as "mca006".
+
+	delete from student1
+	where usn='MCA006';
+
+	1 row deleted
+	select * from student1;
+
+------------------------------------------------------------------------------------------------------------------------------
+USN	NAME	DOB		BRANCH	MARKS1	MARKS2	MARKS3	TOTAL	GPA
+MCA001	Anand	21-MAY-80	MCA	90	95	98	283	9.92
+MCA002	Vijay	28-OCT-80	MCA	80	85	90	255	8.94
+MCA003	Harish	08-AUG-78	MBA	72	65	69	206	7.22
+MCA004	Girish	14-MAR-80	MBA	60	65	70	195	6.84
+MCA005	Sachin	10-SEP-80	MCA	70	80	88	238	8.35
+------------------------------------------------------------------------------------------------------------------------------
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+3.considerd a cricket tournament "abc cup" organize by an organization and create the following tables and execte the queries
+TABLE : TEAM
+
+	create table TEAM
+	(	Teamid varchar(10)primary key,
+		teamname varchar(10),
+		city varchar(10),
+		coach varchar(10)
+	);
+
+	insert into TEAM(teamid,teamname,city,coach)
+	values('T001','RCB','Bangalore','Dravid');
+
+	insert into TEAM(teamid,teamname,city,coach)
+	values('T002','CSK','Chennai','Vettroi');
+
+	insert into TEAM(teamid,teamname,city,coach)
+	values('T003','KKR','Kalkata','RaviSankar');
+
+	insert into TEAM(teamid,teamname,city,coach)
+	values('T004','DD','Delhi','Gavashar');
+	
+	insert into TEAM(teamid,teamname,city,coach)
+	values('T005','MI','Mumbai','Jayavardan');
+
+	select * from team;
+------------------------------------------------------------------
+TEAMID	TEAMNAME	CITY	COACH
+T001	RCB		Bangalore	Dravid
+T002	CSK		Chennai	Vettroi
+T003	KKR		Kalkata	RaviSankar
+T004	DD		Delhi	Gavashar
+T005	MI		Mumbai	Jayavardan
+--------------------------------------------------------------------
+TABLE:PLAYER
+
+	create table PLAYER
+	(	playerid varchar(10)primary key,
+		Name varchar(10),
+		Age number(2),
+		Teamid varchar(10)references TEAM
+	);
+
+
+	insert into PLAYER(playerid,NAME,Age,Teamid)
+	values('P001','Kohil',34,'T001');
+
+	insert into PLAYER(playerid,NAME,Age,Teamid)
+	values('P002','Dhoni',36,'T002');
+
+	insert into PLAYER(playerid,NAME,Age,Teamid)
+	values('P003','Uthappa',32,'T003');
+
+	insert into PLAYER(playerid,NAME,Age,Teamid)
+	values('P004','Grambhir',33,'T004');
+
+	insert into PLAYER(playerid,NAME,Age,Teamid)
+	values('P005','Rsharma',30,'T005');
+
+	insert into PLAYER(playerid,NAME,Age,Teamid)
+	values('P006','Uv',37,'T002');
+
+	insert into PLAYER(playerid,NAME,Age,Teamid)
+	values('P007','zaheer',38,'T001');
+
+	insert into PLAYER(playerid,NAME,Age,Teamid)
+	values('P008','Abhishek',28,'T003');
+
+	insert into PLAYER(playerid,NAME,Age,Teamid)
+	values('P009','Irfanpatan',31,'T004');
+
+	insert into PLAYER(playerid,NAME,Age,Teamid)
+	values('P0010','Sturtbinni',29,'T005');
+
+	select * from player;
+-------------------------------------------------------------------
+PLAYERID	NAME	AGE	TEAMID
+P001		Kohil	34	T001
+P002		Dhoni	36	T002
+P003		Uthappa	32	T003
+P004		Grambhir	33	T004
+P005		Rsharma	30	T005
+P006		Uv	37	T002
+P007		zaheer	38	T001
+P008		Abhishek	28	T003
+P009		Irfanpatan	31	T004
+P0010		Sturtbinni	29	T005
+------------------------------------------------------------------
+
+TABLE:TEAM
+
+	create table TEAM
+	(
+	Teamid varchar(10)primary key,
+	Teamname varchar(10),
+	City varchar(10),
+	Coach varchar(10)
+	);
+
+	insert into TEAM(teamid,teamname,city, coach)
+	values('T001','RCB','Banglore','Dravid',);
+
+	insert into TEAM(teamid,teamname,city, coach)
+	values('T002','CSK','Chennai','vettroi',);
+
+	insert into TEAM(teamid,teamname,city, coach)
+	values('T003','KKR','kalkata','RaviSankar',);
+
+	insert into TEAM(teamid,teamname,city, coach)
+	values('T004','DD','Delhi','Gavashar',);
+
+	insert into TEAM(teamid,teamname,city, coach)
+	values('T005','MI','Mumbai','Jayavardan',);
+
+----------------------------------------------------------------------
+TEAMID	TEAMNAME	CITY	COACH
+T001	RCB		Bangalore	Dravid
+T002	CSK		Chennai	Vettroi
+T003	KKR		Kalkata	RaviSankar
+T004	DD		Delhi	Gavashar
+T005	MI		Mumbai	Jayavardan
+----------------------------------------------------------------------
+
+	TO ALTER THE TABEL;
+
+	alter table TEAM add(Captain varchar(10)references PLAYER);
+
+	table alter
+
+	TO INSERT VALUES TO THE CAPTAIN ATTRIBUTE;
+
+	update TEAM SET Captain= 'P001' where Teamid= 'T001';
+	update TEAM SET Captain= 'P002' where Teamid= 'T002';
+	update TEAM SET Captain= 'P003' where Teamid= 'T003';
+	update TEAM SET Captain= 'P004' where Teamid= 'T004';
+	update TEAM SET Captain= 'P005' where Teamid= 'T005';
+
+-------------------------------------------------------------------------------------------------
+TEAMID	TEAMNAME	CITY	COACH		CAPTAIN
+T001	RCB		Bangalore	Dravid		P001
+T002	CSK		Chennai	Vettroi		P002
+T003	KKR		Kalkata	RaviSankar	P003
+T004	DD		Delhi	Gavashar		P004
+T005	MI		Mumbai	Jayavardan	P005
+------------------------------------------------------------------------------------------------
+
+TABLE:STADIUM
+
+	create table STADIUM
+	(Stadiumid varchar(10)primary key,
+	Name varchar(10),
+	City varchar(10),
+	Area varchar(10),
+	Pin number(10)
+	);
+
+	insert into STADIUM(Stadiumid,name,city,area,pin)
+	values('S001','Firozshah','Delhi','Jc', 765879);
+
+	insert into STADIUM(Stadiumid,name,city,area,pin)
+	values('S002','Chinnaswani','Banglore','RKG', 843755);
+
+	insert into STADIUM(Stadiumid,name,city,area,pin)
+	values('S003','Wankade','Mumbai','SSS', 456366);
+
+	insert into STADIUM(Stadiumid,name,city,area,pin)
+	values('S004','Chidamboran','Chennai','GHP', 535454);
+
+	insert into STADIUM(Stadiumid,name,city,area,pin)
+	values('S005','Fden Garden','kalkata','UYT', 343244);
+-------------------------------------------------------------------------------
+STADIUMID	NAME		CITY	AREA	PIN
+S001		Firozshah		Delhi	Jc	765879
+S003		Wankade		Mumbai	SSS	456366
+S002		Chinnaswani	Banglore	RKG	843755
+S005		Fden Garden	kalkata	UYT	343244
+S004		Chidamboran	Chennai	GHP	535454
+-------------------------------------------------------------------------------
+
+TABLE:MATCH
+
+	create table MATCH
+	(
+	Matchid varchar(10)primary key,
+	Team1 varchar(10)references TEAM,
+	Team2 varchar(10)references TEAM,
+	Date1 date,
+	Time varchar(10),
+	Stadiumid varchar(10)references STADIUM
+	);
+	insert into MATCH(MATCHID,TEAM1,TEAM2,DATE1,TIME,STADIUMID)
+	values('M001','T001','T002','03-APR-2018','9:30','S001');
+
+	insert into MATCH(MATCHID,TEAM1,TEAM2,DATE1,TIME,STADIUMID)
+	values('M002','T003','T004','05-APR-2018','2:30','S002');
+
+	insert into MATCH(MATCHID,TEAM1,TEAM2,DATE1,TIME,STADIUMID)
+	values('M003','T004','T005','07-APR-2018','2:30','S002');
+
+	insert into MATCH(MATCHID,TEAM1,TEAM2,DATE1,TIME,STADIUMID)
+	values('M004','T001','T003','08-APR-2018','9:30','S003');
+
+	insert into MATCH(MATCHID,TEAM1,TEAM2,DATE1,TIME,STADIUMID)
+	values('M005','T002','T005','09-APR-2018','9:30','S004');
+
+	insert into MATCH(MATCHID,TEAM1,TEAM2,DATE1,TIME,STADIUMID)
+	values('M006','T003','T005','11-APR-2018','2:30','S005');
+
+	insert into MATCH(MATCHID,TEAM1,TEAM2,DATE1,TIME,STADIUMID)
+	values('M007','T001','T004','12-APR-2018','9:30','S002');
+
+	insert into MATCH(MATCHID,TEAM1,TEAM2,DATE1,TIME,STADIUMID)
+	values('M008','T004','T002','14-APR-2018','2:30','S002');
+
+---------------------------------------------------------------------------------------------------------------------
+MATCHID	TEAM1	TEAM2	DATE1		TIME	STADIUMID
+M001		T001	T002	03-APR-18	9:30	S001
+M002		T003	T004	05-APR-18	2:30	S002
+M003		T004	T005	07-APR-18	2:30	S002
+M004		T001	T003	08-APR-18	9:30	S003
+M005		T002	T005	09-APR-18	9:30	S004
+M006		T003	T005	11-APR-18	2:30	S005
+M007		T001	T004	12-APR-18	9:30	S002
+M008		T004	T002	14-APR-18	2:30	S002
+---------------------------------------------------------------------------------------------------------------------
+
+TABLE:RESULT
+
+	create table RESULT 
+	(
+	Matchid varchar(10)references MATCH,
+	Teamwon varchar(10)references TEAM,
+	Manofthematch varchar(10)references PLAYER
+	);
+
+	insert into RESULT(MATCHID,TEAMWON,MANOFTHEMATCH)
+	values('M001','T001','P001');
+
+	insert into RESULT(MATCHID,TEAMWON,MANOFTHEMATCH)
+	values('M002','T004','P009');
+
+	insert into RESULT(MATCHID,TEAMWON,MANOFTHEMATCH)
+	values('M003','T004','P009');
+
+	insert into RESULT(MATCHID,TEAMWON,MANOFTHEMATCH)
+	values('M004','T003','P008');
+
+	insert into RESULT(MATCHID,TEAMWON,MANOFTHEMATCH)
+	values('M005','T005','P010');
+
+	insert into RESULT(MATCHID,TEAMWON,MANOFTHEMATCH)
+	values('M006','T003','P003');
+
+	insert into RESULT(MATCHID,TEAMWON,MANOFTHEMATCH)
+	values('M007','T004','P004');
+
+	insert into RESULT(MATCHID,TEAMWON,MANOFTHEMATCH)
+	values('M008','T004','P009');
+
+--------------------------------------------------------------------------------------
+MATCHID	TEAMWON	MANOFTHEMATCH
+M001		T001		P001
+M002		T004		P009
+M003		T004		P009
+M004		T003		P008
+M006		T003		P003
+M007		T004		P004
+M008		T004		P009
+M005		T005		P010
+----------------------------------------------------------------------------------
+
+TABLE:PHONENO
+
+	create table PHONENO
+	(
+	Playerid varchar(10)references PLAYER,
+	PHONE NUMBER(10)
+	);
+
+	insert into PHONENO(Playerid, Phone)
+	values('P001',9731147114);
+
+	insert into PHONENO(Playerid, Phone)
+	values('P002',7687987980);
+
+	insert into PHONENO(Playerid, Phone)
+	values('P003',2343254365);
+
+	insert into PHONENO(Playerid, Phone)
+	values('P004',5657658768);
+
+	insert into PHONENO(Playerid, Phone)
+	values('P005',8798686867);
+
+	insert into PHONENO(Playerid, Phone)
+	values('P006',6545456564);
+
+	insert into PHONENO(Playerid, Phone)
+	values('P007',4356546577);
+
+	insert into PHONENO(Playerid, Phone)
+	values('P008',3543463565);
+
+	insert into PHONENO(Playerid, Phone)
+	values('P009',4353465499);
+
+	insert into PHONENO(Playerid, Phone)
+	values('P010',343255364);
+---------------------------------------------------------------
+PLAYERID	PHONE
+P001		9731147114
+P002		7687987980
+P003		2343254365
+P004		5657658768
+P005		8798686867
+P006		6545456564
+P007		4356546577
+P008		3543463565
+P009		4353465499
+P010		343255364
+------------------------------------------------------------------------
+
+queries:
+
+1. display the yougest player (in terms of age) name, teamname, age in which he belongs of the tournament.
+
+	select name , age ,teamname 
+	from player P, team T
+	where T.teamid = p.teamid and age =( select MIN (age) 
+	from player);
+----------------------------------------------	
+NAME	AGE	TEAMNAME
+Abhishek	28	KKR
+---------------------------------------------
+2. display the youngest player name, team ,age in which he belongs of the tournament from each team.
+
+	select name ,age ,teamname 
+	from player P, team T
+	where T.teamid = P.teamid and age =(select MIN (age) from player 
+	where teamid = T.teamid);
+
+------------------------------------------------
+NAME	AGE	TEAMNAME
+Kohil	34	RCB
+Dhoni	36	CSK
+Abhishek	28	KKR
+Irfanpatan	31	DD
+Sturtbinni	29	MI
+--------------------------------------------------
+
+3.list the details of the stadium where the maximum number of mathc were player 
+
+	select * from stadium
+	where stadiumid = ( select stadiumid from MATCH
+	GROUP BY stadiumid having count(*) = ( select MAX (count(*))
+	from MATCH GROUP BY stadiumid));
+---------------------------------------------------------------------------------------------
+STADIUMID	NAME		CITY	AREA	PIN
+S002		Chinnaswani	Banglore	RKG	843755
+----------------------------------------------------------------------------------------------
+
+4. list the deatils of the player who is not a captain but got the man_of_match award at least in two matches.
+
+	select * from player 
+	where playerid = ( select manofthematch from result R, team T
+	where R. teamwon = T.teamid and captain<>manofthematch 
+	GROUP BY manofthematch having COUNT(*)>2);
+
+-----------------------------------------------------------------------
+PLAYERID	NAME	AGE	TEAMID
+P009		Irfanpatan	31	T004
+--------------------------------------------------------------------
+
+4.display the team details who the maxsimum matcher
+	select * from team 
+	where teamid in (select teamwon from result GROUP BY teamwon 
+	having count(*)= (select MAX(count(*))
+ 	from result GROUP BY teamwon ));
+
+--------------------------------------------------------------------------------------
+TEAMID	TEAMNAME	CITY	COACH	CAPTAIN
+T004	DD	Delhi	Gavashar	P004
+--------------------------------------------------------------------------------------
+
+----------------------------------------------------------------------------------------------------------------------------------------------------
+4.
+
+table: constituency
+
+	create table CONSTITUENCY 
+	(CID varchar(10)primary key,
+	Cname varchar(10),
+	State varchar(10),
+	No_of_voters number(10)
+	);
+
+	insert into CONSTITUENCY(CID,Cname,state,no_of_voters)
+	values('C001','Banglore','KAR',2);
+	insert into CONSTITUENCY(CID,Cname,state,no_of_voters)
+	values('C002','Chennai','TN',1);
+	insert into CONSTITUENCY(CID,Cname,state,no_of_voters)
+	values('C003','Hydrabad','AP',1);
+	insert into CONSTITUENCY(CID,Cname,state,no_of_voters)
+	values('C004','Kochi','Kerala',1);
+	insert into CONSTITUENCY(CID,Cname,state,no_of_voters)
+	values('C005','Agra','UP',1);
+	insert into CONSTITUENCY(CID,Cname,state,no_of_voters)
+	values('C006','Shivamogga','KAR',1);
+	insert into CONSTITUENCY(CID,Cname,state,no_of_voters)
+	values('C007','Hassan','KAR',1);
+
+------------------------------------------------------------------------
+CID	CNAME		STATE	NO_OF_VOTERS
+C001	Banglore		KAR	2
+C002	Chennai		TN	1
+C003	Hydrabad		AP	1
+C004	Kochi		Kerala	1
+C005	Agra		UP	1
+C006	Shivamogga	KAR	1
+C007	Hassan		KAR	1
+-----------------------------------------------------------------------------
+table: voter
+
+	create table VOTER
+	(
+	Vid varchar(10)primary key,
+	Vname varchar(10),
+	Age number(2),
+	HON number(5),
+	City varchar(10),
+	State varchar(10),
+	Pincode number(10),
+	Cid varchar(10)references constituency
+	);
+
+	insert into voter(Vid,Vname,Age,HNO,City,State,Pincode,Cid)
+	values('V001','Prayathi',24,351,'Banglore','KAR',677201,'C001');
+	insert into voter(Vid,Vname,Age,HNO,City,State,Pincode,Cid)
+	values('V002','Anitsh',31,492,'Kochi','Kerale',876967,'C002');
+	insert into voter(Vid,Vname,Age,HNO,City,State,Pincode,Cid)
+	values('V003','Unnathi',19,104,'Banflore','KAR',564677,'C003');
+	insert into voter(Vid,Vname,Age,HNO,City,State,Pincode,Cid)
+	values('V004','Prahjal',42,55,'Chennai','TN',988755,'C004');
+	insert into voter(Vid,Vname,Age,HNO,City,State,Pincode,Cid)
+	values('V005','Risha',18,61,'Agra','UP',453432,'C005');
+	insert into voter(Vid,Vname,Age,HNO,City,State,Pincode,Cid)
+	values('V006','Sanmathi',48,48,'Shimoga','KAR',875477,'C006');
+	insert into voter(Vid,Vname,Age,HNO,City,State,Pincode,Cid)
+	values('V007','Stalin',27,309,'Hydravod','AP', 245467,'C006');
+
+--------------------------------------------------------------------------------------------------------------------
+VID	VNAME	AGE	HOD	CITY	STATE	PINCODECID
+V001	Prayathi	24	351	Banglore	KAR	677201	C001
+V002	Anitsh	31	492	Kochi	Kerale	876967	C002
+V003	Unnathi	19	104	Banflore	KAR	564677	C003
+V004	Prahjal	42	55	Chennai	TN	988755	C004
+V005	Risha	18	61	Agra	UP	453432	C005
+V006	Sanmathi	48	48	Shimoga	KAR	875477	C006
+V007	Stalin	27	309	Hydravod	AP	245467	C006
+-----------------------------------------------------------------------------------------------------------------------
+
+table: party
+
+	create table PARTY
+	(Pid varchar(10)primary key,
+	Pname varchar(10),
+	Symbole varchar(10));
+
+	insert into party(pid,pname,symbole)values('P001','BJP','Lotus');
+	insert into party(pid,pname,symbole)values('P002','Congress','Hand');
+	insert into party(pid,pname,symbole)values('P003','JDS','Grass');
+	insert into party(pid,pname,symbole)values('P004','AIADMK','Cycle');
+
+--------------------------------------------------
+PID	PNAME	SYMBOLE
+P001	BJP	Lotus
+P002	Congress	Hand
+P003	JDS	Grass
+P004	AIADMK	Cycle
+--------------------------------------
+table : candidate
+
+ 	create table CANDIDATE
+	(Canid varchar(10)primary key,
+	Cdname varchar(10),
+	Age number(2),
+	Phone number(10),
+	State varchar(10),
+	Pid varchar(10)references party);
+
+
+	insert into candidate values('CD001','Kumar',59,6348174855,'TN',P004');
+	insert into candidate values('CD002','Eshwar',62,5344758388,'KAR','P001');
+	insert into candidate values('CD003','Rohini',36,9745985799,'KAR','P001');
+	insert into candidate values('CD004','Vinay',47,8453533356,'UP','P002');
+	insert into candidate values('CD005','Pranathi',51,6586388329,'Kerala','P003');
+
+------------------------------------------------------------------------------------------
+CANID	CDNAME	AGE	PHONE		STATE	PID
+CD002	Eshwar	62	5344758388	KAR	P001
+CD003	Rohini	36	9745985799	KAR	P001
+CD004	Vinay	47	8453533356	UP	P002
+CD005	Pranathi	51	6586388329	Kerala	P003
+CD001	Kumar	59	6348174855	TN	P004
+-------------------------------------------------------------------------------------------
+
+table: cantest
+
+	create table  CONTEST
+	(
+	Canid varchar(10)references candidate,
+	Cid varchar(10)references constituency
+	);
+
+
+	insert into contest(Canid,Cid)values('CD002','C001');
+	insert into contest(Canid,Cid)values('CD002','C006');
+	insert into contest(Canid,Cid)values('CD002','C002');
+	insert into contest(Canid,Cid)values('CD003','C006');
+	insert into contest(Canid,Cid)values('CD005','C004');
+
+---------------------------
+CANID	CID
+CD002	C001
+CD002	C006
+CD002	C002
+CD003	C006
+CD005	C004
+----------------------------
+
+question 
+
+i. list the detais of the candidate who are conteston from more than ane constituencies which are belange to different stotes
+
+select * from candidate
+where Canid in(select canid from contest ct,constituency co
+where co.cid=ct.cid group by canid having count(distinct state)>1);
+
+---------------------------------------------------------------------------------------
+CANID	CDNAME	AGE	PHONE		STATE	PID
+CD002	Eshwar	62	5344758388	KAR	P001
+-----------------------------------------------------------------------------------------
+
+
+ii. display the state name having maxiumun number of constitiuencies
+
+select state from constituency 
+group by state having count(*)=(select MAX (count(*))
+from constituency group by state);
+-------------
+STATE
+KAR
+--------
+
+iii.
+
+create or replace procedure checkage(vid in varchar,
+vname in varchar,
+age in number,
+hno in number,
+city in varchar,
+state in varchar,
+pincode in number,
+cid in varchar)is begin
+if   age<18 then
+dbms_output.put_line('age is less than 18 record can not be inserted');
+else
+insert into voter values(vid,vname,age,hno,city,state,pincode,cid);
+commit;
+dbms_output.put_line('record insereted successfully');
+end if;
+end;
+
+Procedure created.
+
+EXECUTION;
+
+call checkage ('V008','Aarushi',17,309,'Hydreabod','AP',352719,'C003');
+
+Call completed.
+
+iv.
+create  or replace procedure votercount(cons in varchar) as cnt number (10);
+begin 
+select no_of_voters into cnt from constituency
+where (name=cons; dbms_output.put_line('no_of_voters in '|| cons||' constituency' || ' cnt );
+end;
+
+
+==============================================================================================
+5.
+TABLE:PLACE
+
+ 	create table PLACE
+ 	( 
+	Pid varchar(10)primary key,
+	Pname varchar(25),
+	State varchar(15),
+	Distance number(6),
+	History varchar(20));
+
+	insert into place(Pid,Pname,State,Distance,History)values('P001','Joga falls','karanataka',256,'sharavathidam');
+	insert into place(Pid,Pname,State,Distance,History)values('P002',Ppalace','karanataka',435,'historic');
+	insert into place(Pid,Pname,State,Distance,History)values('P003','Golgumbaz','karanataka',572,'echo');
+	insert into place(Pid,Pname,State,Distance,History)values('P004','Thar desert','Rajasthan',313,'nature wonder');
+	insert into place(Pid,Pname,State,Distance,History)values('P005','Marina beach','Tamilnadu',296,'nature wonder');
+	insert into place(Pid,Pname,State,Distance,History)values('P006','Tirupathi','AP',446,'devine');
+	insert into place(Pid,Pname,State,Distance,History)values('P007','Maymar','Kerala',806,'back water');
+	insert into place(Pid,Pname,State,Distance,History)values('P008','Ajanthcaves','Maharastra',776,'echo');
+	insert into place(Pid,Pname,State,Distance,History)values('P009','Tajmahal','Delhi',896,'shahgahan');
+	insert into place(Pid,Pname,State,Distance,History)values('P010','Red fort','Delhi',999,'mughal');
+
+--------------------------------------------------------------------------------------------------------------------
+PID	PNAME		STATE		DISTANCE	HISTORY
+P001	Joga falls		karanataka	256		sharavathidam
+P003	Golgumbaz	karanataka	572		echo
+P004	Thar desert	Rajasthan		313		nature wonder
+P005	Marina beach	Tamilnadu		296		nature wonder
+P006	Tirupathi		AP		446		devine
+P007	Maymar		Kerala		806		back water
+P008	Ajanthcaves	Maharastra	776		echo
+P009	Tajmahal		Delhi		896		shahgahan
+P010	Red fort		Delhi		999		mughal
+P002	Palace		karanataka	435		historic
+--------------------------------------------------------------------------------------------------------------------
+
+TABLE : TOURISTS
+
+	create table TOURISTS
+	( 
+	Tid varchar(10)primary key,
+	Tname varchar(10),
+	Age number(2),
+	Country varchar(20));
+
+	insert into tourists(Tid,Tname,Age,Country)values('T001','Oh hane',35,'south Korea');
+	insert into tourists(Tid,Tname,Age,Country)values('T002','Backsengio',24,'south Korea');
+	insert into tourists(Tid,Tname,Age,Country)values('T003','Bungjangga',31,'China');
+	insert into tourists(Tid,Tname,Age,Country)values('T004','Steve',45,'Austalia');
+	insert into tourists(Tid,Tname,Age,Country)values('T005','Tanushree',22,'India');
+
+-------------------------------------------------------------------------
+TID	TNAME		AGE	COUNTRY
+T001	Oh hane		35	south Korea
+T002	Backsengio	24	south Korea
+T003	Bungjangga	31	China
+T004	Steve		45	Austalia
+T005	Tanushree		22	India
+--------------------------------------------------------------------------
+
+TABLE : VISIT
+
+	create table VISIT 
+	( 
+	Tid varchar(10) references TOURISTS,
+	Pid varchar(10)references place,
+	Date1 date,
+	Primary key(Tid,Pid));
+
+insert into visit values('T001','P001','23-jan-18');
+insert into visit values('T002','T009','20-jan-18');
+insert into visit values('T003','P009','18-jan-18');
+insert into visit values('T004','P009','12-feb-18');
+insert into visit values('T005','P009','23-jan-18');
+insert into visit values('T003','P004','03-feb-18');
+insert into visit values('T005','P001','07-jan-18');
+insert into visit values('T005','P004','19-jan-18');
+insert into visit values('T005','P005','06-feb-18');
+insert into visit values('T005','P006','25-jan-18');
+insert into visit values('T005','P007','25-jan-18');
+insert into visit values('T005','P008','18-feb-18');
+insert into visit values('T005','P010','10-feb-18');
+insert into visit values('T001','P002','11-feb-18');
+insert into visit values('T001','P003','11-feb-18');
+
+----------------------------------------------------------------------
+TID	PID	DATE1
+T001	P001	23-JAN-18
+T003	P009	18-JAN-18
+T004	P009	12-FEB-18
+T005	P009	23-JAN-18
+T003	P004	03-FEB-18
+T005	P001	07-JAN-18
+T005	P004	19-JAN-18
+T005	P005	06-FEB-18
+T005	P006	25-JAN-18
+T005	P007	25-JAN-18
+T005	P008	18-FEB-18
+T005	P010	10-FEB-18
+T001	P002	11-FEB-18
+T001	P003	11-FEB-18
+T002	P009	20-JAN-18
+-----------------------------------------------------------------------
+
+table : email
+
+create table EMAIL
+(
+Tid varchar(10)references TOURISTS,
+Email varchar(20)
+);
+
+insert into email values ('T001','T001@gmail.com');
+insert into email values ('T002','T002@gmail.com');
+insert into email values ('T003','T003@gmail.com');
+insert into email values ('T004','T004@gmail.com');
+insert into email values ('T005','T005@gmail.com');
+
+----------------------------------------------
+TID	EMAIL
+T001	T001@gmail.com
+T002	T002@gmail.com
+T003	T003@gmail.com
+T004	T004@gmail.com
+T005	T005@gmail.com
+-------------------------------------------------
+
+i.)list the state name which is having max no of tourist places
+	select state from place 
+	group by state having count(*)=(select max (count(*)) 
+	from place group by state);
+
+-----------------------------
+STATE
+karanataka
+----------------------------
+
+ii.)list detais of tourist place where max no of tousiste visited
+
+	select * from place 
+	where Pid in (select Pid from visit group by Pid having count(*) =
+	(select max (count(*)) from visit group by Pid));
+
+-------------------------------------------------------------------------------------
+PID	PNAME	STATE	DISTANCE	HISTORY
+P009	Tajmahal	Delhi	896	shahgahan
+-------------------------------------------------------------------------------------
+
+iii.)List  the  details  of  tourists  visited  all  tourist  places  of  the  state 
+“KARNATAKA”. 
+ 
+Select * from TOURISTS  
+Where TID in(select TID from VISIT V,PLACE P 
+Where V.PID=P.PID and state='Karnataka' 
+GROUP BY V.TID having count 
+(distinct Pname) = (Select count(*) from PLACE  
+Where state='Karnataka'));
+
+-------------------------------------------------------------------------------------
+TID  TName  Age  Country 
+T001  Oh hane  35  South Korea 
+-------------------------------------------------------------------------------------
+
+iv. Display the details of the tourists visited at least one tourist place of the state, 
+but visited all states tourist places. 
+ 
+Select * from TOURISTS t where (select count(distinct state)from VISIT V,PLACE P 
+where V.PID=P.PID and t.TID=V.TID)=(Select count (distinct state) from PLACE);
+
+-------------------------------------------------------------------------------------
+TID  TName  Age  Country 
+T005  Tanushree  22  India 
+-------------------------------------------------------------------------------------
+
+v. Display the details of the tourist place visited by the tourists of all country. 
+ 
+Select * from PLACE P 
+where (select count(distinct Country) 
+from VISIT V, TOURISTS T 
+where V.PID = P.PID and T.TID=V.TID)= 
+(select count(distinct Country)from TOURISTS);
+
+-------------------------------------------------------------------------------------
+PID  Pname  State  Distance  History 
+P009  Tajmahal  Delhi  896  Shahjahan
+-------------------------------------------------------------------------------------
+
+
+
+

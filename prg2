@@ -1,0 +1,154 @@
+Consider  the  following  schema:  STUDENT  (USN,  name,  date_of_birth, 
+branch, mark1, mark2, mark3, total,GPA) 
+
+2. CREATE TABLE STUDENT1
+
+create table STUDENT1
+(
+	USN varchar(10)primary key,
+	name varchar(20),
+	DOB date,
+	branch varchar(10),
+	marks1 number(3),
+	marks2 number(3),
+	marks3 number(3),
+	total number(3),
+	GPA number(4,2)
+);
+
+	insert into STUDENT1(USN,name,DOB,branch,marks1,marks2,marks3)
+	values('MCA001','Anand','21-MAY-1980','MCA',90,95,98);
+
+	insert into STUDENT1(USN,name,DOB,branch,marks1,marks2,marks3)
+	values('MCA002','Vijay','28-OCT-1980','MCA',80,85,90);
+
+	insert into STUDENT1(USN,name,DOB,branch,marks1,marks2,marks3)
+	values('MCA003','Harish','08-AUG-1978','MBA',72,65,69);
+
+	insert into STUDENT1(USN,name,DOB,branch,marks1,marks2,marks3)
+	values('MCA004','Girish','14-MAR-1980','MBA',60,65,70);
+
+	insert into STUDENT1(USN,name,DOB,branch,marks1,marks2,marks3)
+	values('MCA005','Sachin','10-SEP-1980','MCA',70,80,88);
+
+	insert into STUDENT1(USN,name,DOB,branch,marks1,marks2,marks3)
+	values('MCA006','Kumar','28-MAY-1980','MCA',55,58,62);
+
+USN	NAME	DOB		BRANCH	MARKS1	MARKS2	MARKS3	TOTAL	GPA
+MCA001	Anand	21-MAY-80	MCA	90	95	98		 
+MCA002	Vijay	28-OCT-80	MCA	80	85	90		 
+MCA003	Harish	08-AUG-78	MBA	72	65	69		 
+MCA004	Girish	14-MAR-80	MBA	60	65	70		 
+MCA005	Sachin	10-SEP-80	MCA	70	80	88		 
+MCA006	Kumar	28-MAY-80	MCA	55	58	62		
+
+
+a).update the column total by adding the colums mark1, marks2, marks3.
+
+	update student1 set total =marks1+marks2+marks3;
+	select * from student1
+
+------------------------------------------------------------------------------------------------------------------------------
+USN	NAME	DOB		BRANCH	MARKS1	MARKS2	MARKS3	TOTAL	GPA
+MCA001	Anand	21-MAY-80	MCA	90	95	98	283	 
+MCA002	Vijay	28-OCT-80	MCA	80	85	90	255	 
+MCA003	Harish	08-AUG-78	MBA	72	65	69	206	 
+MCA004	Girish	14-MAR-80	MBA	60	65	70	195	 
+MCA005	Sachin	10-SEP-80	MCA	70	80	88	238	 
+MCA006	Kumar	28-MAY-80	MCA	55	58	62	175	
+------------------------------------------------------------------------------------------------------------------------------
+b).find the gpa score of all the studnt 
+
+	select TRUNC(((marks1+marks2+marks3)/3)/9.5,2) gpa from student1
+
+-----------
+GPA
+9.92
+8.94
+7.22
+6.84
+8.35
+6.14
+------------
+	update student1 set gpa= TRUNC(((marks1+marks2+marks3)/3)/9.5,2)
+
+------------------------------------------------------------------------------------------------------------------------------
+USN	NAME	DOB		BRANCH	MARKS1	MARKS2	MARKS3	TOTAL	GPA
+MCA001	Anand	21-MAY-80	MCA	90	95	98	283	9.92
+MCA002	Vijay	28-OCT-80	MCA	80	85	90	255	8.94
+MCA003	Harish	08-AUG-78	MBA	72	65	69	206	7.22
+MCA004	Girish	14-MAR-80	MBA	60	65	70	195	6.84
+MCA005	Sachin	10-SEP-80	MCA	70	80	88	238	8.35
+MCA006	Kumar	28-MAY-80	MCA	55	58	62	175	6.14
+------------------------------------------------------------------------------------------------------------------------------
+c).find the students who born on a particulur year of birth form the date of birth colum.
+
+	select * from student1 
+	where dob like '_______78';
+
+------------------------------------------------------------------------------------------------------------------------------
+USN	NAME	DOB		BRANCH	MARKS1	MARKS2	MARKS3	TOTAL	GPA
+MCA003	Harish	08-AUG-78	MBA	72	65	69	206	7.22
+------------------------------------------------------------------------------------------------------------------------------
+
+d). list the students who are studging in a where branch = 'MCA';
+
+	select * from student1
+	where branch = 'MCA';
+
+------------------------------------------------------------------------------------------------------------------------------
+USN	NAME	DOB		BRANCH	MARKS1	MARKS2	MARKS3	TOTAL	GPA
+MCA001	Anand	21-MAY-80	MCA	90	95	98	283	9.92
+MCA002	Vijay	28-OCT-80	MCA	80	85	90	255	8.94
+MCA005	Sachin	10-SEP-80	MCA	70	80	88	238	8.35
+MCA006	Kumar	28-MAY-80	MCA	55	58	62	175	6.14
+------------------------------------------------------------------------------------------------------------------------------
+
+e).find the maximum gpa score of the student breanch wise
+
+	select gpa as MAX_GPA,name, branch from student1
+	where gpa in (select max(gpa)
+	from student1 group by branch);
+
+-------------------------------------------------------
+MAX_GPA	NAME	BRANCH
+7.22		Harish	MBA
+9.92		Anand	MCA
+
+---------------------------------------------------------
+
+f).find the student whose name starts with the alphabet "s".
+
+	select * from student1
+	where name like 'S%';
+------------------------------------------------------------------------------------------------------------------------------
+USN	NAME	DOB		BRANCH	MARKS1	MARKS2	MARKS3	TOTAL	GPA
+MCA005	Sachin	10-SEP-80	MCA	70	80	88	238	8.35
+------------------------------------------------------------------------------------------------------------------------------
+
+g).find the student whose name ends with the alphabets "AR".
+
+	select * from student1
+	where name like '%ar';
+
+------------------------------------------------------------------------------------------------------------------------------
+USN	NAME	DOB	BRANCH	MARKS1	MARKS2	MARKS3	TOTAL	GPA
+MCA006	Kumar	28-MAY-80	MCA	55	58	62	175	6.14
+------------------------------------------------------------------------------------------------------------------------------
+
+h).delete the student details whose usn is given as "mca006".
+
+	delete from student1
+	where usn='MCA006';
+
+	1 row deleted
+	select * from student1;
+
+------------------------------------------------------------------------------------------------------------------------------
+USN	NAME	DOB		BRANCH	MARKS1	MARKS2	MARKS3	TOTAL	GPA
+MCA001	Anand	21-MAY-80	MCA	90	95	98	283	9.92
+MCA002	Vijay	28-OCT-80	MCA	80	85	90	255	8.94
+MCA003	Harish	08-AUG-78	MBA	72	65	69	206	7.22
+MCA004	Girish	14-MAR-80	MBA	60	65	70	195	6.84
+MCA005	Sachin	10-SEP-80	MCA	70	80	88	238	8.35
+------------------------------------------------------------------------------------------------------------------------------

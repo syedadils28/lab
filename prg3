@@ -1,0 +1,386 @@
+Design  an  ER-diagram  for  the  following  scenario,  Convert  the  same  into  a     
+relational  model  and  then  solve  the  Following  queries
+
+3.considerd a cricket tournament "abc cup" organize by an organization and create the following tables and execte the queries
+TABLE : TEAM
+
+	create table TEAM
+	(	Teamid varchar(10)primary key,
+		teamname varchar(10),
+		city varchar(10),
+		coach varchar(10)
+	);
+
+	insert into TEAM(teamid,teamname,city,coach)
+	values('T001','RCB','Bangalore','Dravid');
+
+	insert into TEAM(teamid,teamname,city,coach)
+	values('T002','CSK','Chennai','Vettroi');
+
+	insert into TEAM(teamid,teamname,city,coach)
+	values('T003','KKR','Kalkata','RaviSankar');
+
+	insert into TEAM(teamid,teamname,city,coach)
+	values('T004','DD','Delhi','Gavashar');
+	
+	insert into TEAM(teamid,teamname,city,coach)
+	values('T005','MI','Mumbai','Jayavardan');
+
+	select * from team;
+------------------------------------------------------------------
+TEAMID	TEAMNAME	CITY	COACH
+T001	RCB		Bangalore	Dravid
+T002	CSK		Chennai	Vettroi
+T003	KKR		Kalkata	RaviSankar
+T004	DD		Delhi	Gavashar
+T005	MI		Mumbai	Jayavardan
+--------------------------------------------------------------------
+TABLE:PLAYER
+
+	create table PLAYER
+	(	playerid varchar(10)primary key,
+		Name varchar(10),
+		Age number(2),
+		Teamid varchar(10)references TEAM
+	);
+
+
+	insert into PLAYER(playerid,NAME,Age,Teamid)
+	values('P001','Kohil',34,'T001');
+
+	insert into PLAYER(playerid,NAME,Age,Teamid)
+	values('P002','Dhoni',36,'T002');
+
+	insert into PLAYER(playerid,NAME,Age,Teamid)
+	values('P003','Uthappa',32,'T003');
+
+	insert into PLAYER(playerid,NAME,Age,Teamid)
+	values('P004','Grambhir',33,'T004');
+
+	insert into PLAYER(playerid,NAME,Age,Teamid)
+	values('P005','Rsharma',30,'T005');
+
+	insert into PLAYER(playerid,NAME,Age,Teamid)
+	values('P006','Uv',37,'T002');
+
+	insert into PLAYER(playerid,NAME,Age,Teamid)
+	values('P007','zaheer',38,'T001');
+
+	insert into PLAYER(playerid,NAME,Age,Teamid)
+	values('P008','Abhishek',28,'T003');
+
+	insert into PLAYER(playerid,NAME,Age,Teamid)
+	values('P009','Irfanpatan',31,'T004');
+
+	insert into PLAYER(playerid,NAME,Age,Teamid)
+	values('P0010','Sturtbinni',29,'T005');
+
+	select * from player;
+-------------------------------------------------------------------
+PLAYERID	NAME	AGE	TEAMID
+P001		Kohil	34	T001
+P002		Dhoni	36	T002
+P003		Uthappa	32	T003
+P004		Grambhir	33	T004
+P005		Rsharma	30	T005
+P006		Uv	37	T002
+P007		zaheer	38	T001
+P008		Abhishek	28	T003
+P009		Irfanpatan	31	T004
+P0010		Sturtbinni	29	T005
+------------------------------------------------------------------
+
+TABLE:TEAM
+
+	create table TEAM
+	(
+	Teamid varchar(10)primary key,
+	Teamname varchar(10),
+	City varchar(10),
+	Coach varchar(10)
+	);
+
+	insert into TEAM(teamid,teamname,city, coach)
+	values('T001','RCB','Banglore','Dravid',);
+
+	insert into TEAM(teamid,teamname,city, coach)
+	values('T002','CSK','Chennai','vettroi',);
+
+	insert into TEAM(teamid,teamname,city, coach)
+	values('T003','KKR','kalkata','RaviSankar',);
+
+	insert into TEAM(teamid,teamname,city, coach)
+	values('T004','DD','Delhi','Gavashar',);
+
+	insert into TEAM(teamid,teamname,city, coach)
+	values('T005','MI','Mumbai','Jayavardan',);
+
+----------------------------------------------------------------------
+TEAMID	TEAMNAME	CITY	COACH
+T001	RCB		Bangalore	Dravid
+T002	CSK		Chennai	Vettroi
+T003	KKR		Kalkata	RaviSankar
+T004	DD		Delhi	Gavashar
+T005	MI		Mumbai	Jayavardan
+----------------------------------------------------------------------
+
+	TO ALTER THE TABEL;
+
+	alter table TEAM add(Captain varchar(10)references PLAYER);
+
+	table alter
+
+	TO INSERT VALUES TO THE CAPTAIN ATTRIBUTE;
+
+	update TEAM SET Captain= 'P001' where Teamid= 'T001';
+	update TEAM SET Captain= 'P002' where Teamid= 'T002';
+	update TEAM SET Captain= 'P003' where Teamid= 'T003';
+	update TEAM SET Captain= 'P004' where Teamid= 'T004';
+	update TEAM SET Captain= 'P005' where Teamid= 'T005';
+
+-------------------------------------------------------------------------------------------------
+TEAMID	TEAMNAME	CITY	COACH		CAPTAIN
+T001	RCB		Bangalore	Dravid		P001
+T002	CSK		Chennai	Vettroi		P002
+T003	KKR		Kalkata	RaviSankar	P003
+T004	DD		Delhi	Gavashar		P004
+T005	MI		Mumbai	Jayavardan	P005
+------------------------------------------------------------------------------------------------
+
+TABLE:STADIUM
+
+	create table STADIUM
+	(Stadiumid varchar(10)primary key,
+	Name varchar(10),
+	City varchar(10),
+	Area varchar(10),
+	Pin number(10)
+	);
+
+	insert into STADIUM(Stadiumid,name,city,area,pin)
+	values('S001','Firozshah','Delhi','Jc', 765879);
+
+	insert into STADIUM(Stadiumid,name,city,area,pin)
+	values('S002','Chinnaswani','Banglore','RKG', 843755);
+
+	insert into STADIUM(Stadiumid,name,city,area,pin)
+	values('S003','Wankade','Mumbai','SSS', 456366);
+
+	insert into STADIUM(Stadiumid,name,city,area,pin)
+	values('S004','Chidamboran','Chennai','GHP', 535454);
+
+	insert into STADIUM(Stadiumid,name,city,area,pin)
+	values('S005','Fden Garden','kalkata','UYT', 343244);
+-------------------------------------------------------------------------------
+STADIUMID	NAME		CITY	AREA	PIN
+S001		Firozshah		Delhi	Jc	765879
+S003		Wankade		Mumbai	SSS	456366
+S002		Chinnaswani	Banglore	RKG	843755
+S005		Fden Garden	kalkata	UYT	343244
+S004		Chidamboran	Chennai	GHP	535454
+-------------------------------------------------------------------------------
+
+TABLE:MATCH
+
+	create table MATCH
+	(
+	Matchid varchar(10)primary key,
+	Team1 varchar(10)references TEAM,
+	Team2 varchar(10)references TEAM,
+	Date1 date,
+	Time varchar(10),
+	Stadiumid varchar(10)references STADIUM
+	);
+	insert into MATCH(MATCHID,TEAM1,TEAM2,DATE1,TIME,STADIUMID)
+	values('M001','T001','T002','03-APR-2018','9:30','S001');
+
+	insert into MATCH(MATCHID,TEAM1,TEAM2,DATE1,TIME,STADIUMID)
+	values('M002','T003','T004','05-APR-2018','2:30','S002');
+
+	insert into MATCH(MATCHID,TEAM1,TEAM2,DATE1,TIME,STADIUMID)
+	values('M003','T004','T005','07-APR-2018','2:30','S002');
+
+	insert into MATCH(MATCHID,TEAM1,TEAM2,DATE1,TIME,STADIUMID)
+	values('M004','T001','T003','08-APR-2018','9:30','S003');
+
+	insert into MATCH(MATCHID,TEAM1,TEAM2,DATE1,TIME,STADIUMID)
+	values('M005','T002','T005','09-APR-2018','9:30','S004');
+
+	insert into MATCH(MATCHID,TEAM1,TEAM2,DATE1,TIME,STADIUMID)
+	values('M006','T003','T005','11-APR-2018','2:30','S005');
+
+	insert into MATCH(MATCHID,TEAM1,TEAM2,DATE1,TIME,STADIUMID)
+	values('M007','T001','T004','12-APR-2018','9:30','S002');
+
+	insert into MATCH(MATCHID,TEAM1,TEAM2,DATE1,TIME,STADIUMID)
+	values('M008','T004','T002','14-APR-2018','2:30','S002');
+
+---------------------------------------------------------------------------------------------------------------------
+MATCHID	TEAM1	TEAM2	DATE1		TIME	STADIUMID
+M001		T001	T002	03-APR-18	9:30	S001
+M002		T003	T004	05-APR-18	2:30	S002
+M003		T004	T005	07-APR-18	2:30	S002
+M004		T001	T003	08-APR-18	9:30	S003
+M005		T002	T005	09-APR-18	9:30	S004
+M006		T003	T005	11-APR-18	2:30	S005
+M007		T001	T004	12-APR-18	9:30	S002
+M008		T004	T002	14-APR-18	2:30	S002
+---------------------------------------------------------------------------------------------------------------------
+
+TABLE:RESULT
+
+	create table RESULT 
+	(
+	Matchid varchar(10)references MATCH,
+	Teamwon varchar(10)references TEAM,
+	Manofthematch varchar(10)references PLAYER
+	);
+
+	insert into RESULT(MATCHID,TEAMWON,MANOFTHEMATCH)
+	values('M001','T001','P001');
+
+	insert into RESULT(MATCHID,TEAMWON,MANOFTHEMATCH)
+	values('M002','T004','P009');
+
+	insert into RESULT(MATCHID,TEAMWON,MANOFTHEMATCH)
+	values('M003','T004','P009');
+
+	insert into RESULT(MATCHID,TEAMWON,MANOFTHEMATCH)
+	values('M004','T003','P008');
+
+	insert into RESULT(MATCHID,TEAMWON,MANOFTHEMATCH)
+	values('M005','T005','P010');
+
+	insert into RESULT(MATCHID,TEAMWON,MANOFTHEMATCH)
+	values('M006','T003','P003');
+
+	insert into RESULT(MATCHID,TEAMWON,MANOFTHEMATCH)
+	values('M007','T004','P004');
+
+	insert into RESULT(MATCHID,TEAMWON,MANOFTHEMATCH)
+	values('M008','T004','P009');
+
+--------------------------------------------------------------------------------------
+MATCHID	TEAMWON	MANOFTHEMATCH
+M001		T001		P001
+M002		T004		P009
+M003		T004		P009
+M004		T003		P008
+M006		T003		P003
+M007		T004		P004
+M008		T004		P009
+M005		T005		P010
+----------------------------------------------------------------------------------
+
+TABLE:PHONENO
+
+	create table PHONENO
+	(
+	Playerid varchar(10)references PLAYER,
+	PHONE NUMBER(10)
+	);
+
+	insert into PHONENO(Playerid, Phone)
+	values('P001',9731147114);
+
+	insert into PHONENO(Playerid, Phone)
+	values('P002',7687987980);
+
+	insert into PHONENO(Playerid, Phone)
+	values('P003',2343254365);
+
+	insert into PHONENO(Playerid, Phone)
+	values('P004',5657658768);
+
+	insert into PHONENO(Playerid, Phone)
+	values('P005',8798686867);
+
+	insert into PHONENO(Playerid, Phone)
+	values('P006',6545456564);
+
+	insert into PHONENO(Playerid, Phone)
+	values('P007',4356546577);
+
+	insert into PHONENO(Playerid, Phone)
+	values('P008',3543463565);
+
+	insert into PHONENO(Playerid, Phone)
+	values('P009',4353465499);
+
+	insert into PHONENO(Playerid, Phone)
+	values('P010',343255364);
+---------------------------------------------------------------
+PLAYERID	PHONE
+P001		9731147114
+P002		7687987980
+P003		2343254365
+P004		5657658768
+P005		8798686867
+P006		6545456564
+P007		4356546577
+P008		3543463565
+P009		4353465499
+P010		343255364
+------------------------------------------------------------------------
+
+queries:
+
+1. display the yougest player (in terms of age) name, teamname, age in which he belongs of the tournament.
+
+	select name , age ,teamname 
+	from player P, team T
+	where T.teamid = p.teamid and age =( select MIN (age) 
+	from player);
+----------------------------------------------	
+NAME	AGE	TEAMNAME
+Abhishek	28	KKR
+---------------------------------------------
+2. display the youngest player name, team ,age in which he belongs of the tournament from each team.
+
+	select name ,age ,teamname 
+	from player P, team T
+	where T.teamid = P.teamid and age =(select MIN (age) from player 
+	where teamid = T.teamid);
+
+------------------------------------------------
+NAME	AGE	TEAMNAME
+Kohil	34	RCB
+Dhoni	36	CSK
+Abhishek	28	KKR
+Irfanpatan	31	DD
+Sturtbinni	29	MI
+--------------------------------------------------
+
+3.list the details of the stadium where the maximum number of mathc were player 
+
+	select * from stadium
+	where stadiumid = ( select stadiumid from MATCH
+	GROUP BY stadiumid having count(*) = ( select MAX (count(*))
+	from MATCH GROUP BY stadiumid));
+---------------------------------------------------------------------------------------------
+STADIUMID	NAME		CITY	AREA	PIN
+S002		Chinnaswani	Banglore	RKG	843755
+----------------------------------------------------------------------------------------------
+
+4. list the deatils of the player who is not a captain but got the man_of_match award at least in two matches.
+
+	select * from player 
+	where playerid = ( select manofthematch from result R, team T
+	where R. teamwon = T.teamid and captain<>manofthematch 
+	GROUP BY manofthematch having COUNT(*)>2);
+
+-----------------------------------------------------------------------
+PLAYERID	NAME	AGE	TEAMID
+P009		Irfanpatan	31	T004
+--------------------------------------------------------------------
+
+4.display the team details who the maxsimum matcher
+	select * from team 
+	where teamid in (select teamwon from result GROUP BY teamwon 
+	having count(*)= (select MAX(count(*))
+ 	from result GROUP BY teamwon ));
+
+--------------------------------------------------------------------------------------
+TEAMID	TEAMNAME	CITY	COACH	CAPTAIN
+T004	DD	Delhi	Gavashar	P004
+--------------------------------------------------------------------------------------

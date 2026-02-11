@@ -1,0 +1,190 @@
+Design an ER-diagram for the following scenario, Convert the same into a 
+relational model, normalize Relations into a suitable Normal form and then solve 
+the following querie
+
+5.
+TABLE:PLACE
+
+ 	create table PLACE
+ 	( 
+	Pid varchar(10)primary key,
+	Pname varchar(25),
+	State varchar(15),
+	Distance number(6),
+	History varchar(20));
+
+	insert into place(Pid,Pname,State,Distance,History)values('P001','Joga falls','karanataka',256,'sharavathidam');
+	insert into place(Pid,Pname,State,Distance,History)values('P002',Ppalace','karanataka',435,'historic');
+	insert into place(Pid,Pname,State,Distance,History)values('P003','Golgumbaz','karanataka',572,'echo');
+	insert into place(Pid,Pname,State,Distance,History)values('P004','Thar desert','Rajasthan',313,'nature wonder');
+	insert into place(Pid,Pname,State,Distance,History)values('P005','Marina beach','Tamilnadu',296,'nature wonder');
+	insert into place(Pid,Pname,State,Distance,History)values('P006','Tirupathi','AP',446,'devine');
+	insert into place(Pid,Pname,State,Distance,History)values('P007','Maymar','Kerala',806,'back water');
+	insert into place(Pid,Pname,State,Distance,History)values('P008','Ajanthcaves','Maharastra',776,'echo');
+	insert into place(Pid,Pname,State,Distance,History)values('P009','Tajmahal','Delhi',896,'shahgahan');
+	insert into place(Pid,Pname,State,Distance,History)values('P010','Red fort','Delhi',999,'mughal');
+
+--------------------------------------------------------------------------------------------------------------------
+PID	PNAME		STATE		DISTANCE	HISTORY
+P001	Joga falls		karanataka	256		sharavathidam
+P003	Golgumbaz	karanataka	572		echo
+P004	Thar desert	Rajasthan		313		nature wonder
+P005	Marina beach	Tamilnadu		296		nature wonder
+P006	Tirupathi		AP		446		devine
+P007	Maymar		Kerala		806		back water
+P008	Ajanthcaves	Maharastra	776		echo
+P009	Tajmahal		Delhi		896		shahgahan
+P010	Red fort		Delhi		999		mughal
+P002	Palace		karanataka	435		historic
+--------------------------------------------------------------------------------------------------------------------
+
+TABLE : TOURISTS
+
+	create table TOURISTS
+	( 
+	Tid varchar(10)primary key,
+	Tname varchar(10),
+	Age number(2),
+	Country varchar(20));
+
+	insert into tourists(Tid,Tname,Age,Country)values('T001','Oh hane',35,'south Korea');
+	insert into tourists(Tid,Tname,Age,Country)values('T002','Backsengio',24,'south Korea');
+	insert into tourists(Tid,Tname,Age,Country)values('T003','Bungjangga',31,'China');
+	insert into tourists(Tid,Tname,Age,Country)values('T004','Steve',45,'Austalia');
+	insert into tourists(Tid,Tname,Age,Country)values('T005','Tanushree',22,'India');
+
+-------------------------------------------------------------------------
+TID	TNAME		AGE	COUNTRY
+T001	Oh hane		35	south Korea
+T002	Backsengio	24	south Korea
+T003	Bungjangga	31	China
+T004	Steve		45	Austalia
+T005	Tanushree		22	India
+--------------------------------------------------------------------------
+
+TABLE : VISIT
+
+	create table VISIT 
+	( 
+	Tid varchar(10) references TOURISTS,
+	Pid varchar(10)references place,
+	Date1 date,
+	Primary key(Tid,Pid));
+
+insert into visit values('T001','P001','23-jan-18');
+insert into visit values('T002','T009','20-jan-18');
+insert into visit values('T003','P009','18-jan-18');
+insert into visit values('T004','P009','12-feb-18');
+insert into visit values('T005','P009','23-jan-18');
+insert into visit values('T003','P004','03-feb-18');
+insert into visit values('T005','P001','07-jan-18');
+insert into visit values('T005','P004','19-jan-18');
+insert into visit values('T005','P005','06-feb-18');
+insert into visit values('T005','P006','25-jan-18');
+insert into visit values('T005','P007','25-jan-18');
+insert into visit values('T005','P008','18-feb-18');
+insert into visit values('T005','P010','10-feb-18');
+insert into visit values('T001','P002','11-feb-18');
+insert into visit values('T001','P003','11-feb-18');
+
+----------------------------------------------------------------------
+TID	PID	DATE1
+T001	P001	23-JAN-18
+T003	P009	18-JAN-18
+T004	P009	12-FEB-18
+T005	P009	23-JAN-18
+T003	P004	03-FEB-18
+T005	P001	07-JAN-18
+T005	P004	19-JAN-18
+T005	P005	06-FEB-18
+T005	P006	25-JAN-18
+T005	P007	25-JAN-18
+T005	P008	18-FEB-18
+T005	P010	10-FEB-18
+T001	P002	11-FEB-18
+T001	P003	11-FEB-18
+T002	P009	20-JAN-18
+-----------------------------------------------------------------------
+
+table : email
+
+create table EMAIL
+(
+Tid varchar(10)references TOURISTS,
+Email varchar(20)
+);
+
+insert into email values ('T001','T001@gmail.com');
+insert into email values ('T002','T002@gmail.com');
+insert into email values ('T003','T003@gmail.com');
+insert into email values ('T004','T004@gmail.com');
+insert into email values ('T005','T005@gmail.com');
+
+----------------------------------------------
+TID	EMAIL
+T001	T001@gmail.com
+T002	T002@gmail.com
+T003	T003@gmail.com
+T004	T004@gmail.com
+T005	T005@gmail.com
+-------------------------------------------------
+
+i.)list the state name which is having max no of tourist places
+	select state from place 
+	group by state having count(*)=(select max (count(*)) 
+	from place group by state);
+
+-----------------------------
+STATE
+karanataka
+----------------------------
+
+ii.)list detais of tourist place where max no of tousiste visited
+
+	select * from place 
+	where Pid in (select Pid from visit group by Pid having count(*) =
+	(select max (count(*)) from visit group by Pid));
+
+-------------------------------------------------------------------------------------
+PID	PNAME	STATE	DISTANCE	HISTORY
+P009	Tajmahal	Delhi	896	shahgahan
+-------------------------------------------------------------------------------------
+
+iii.)List  the  details  of  tourists  visited  all  tourist  places  of  the  state 
+“KARNATAKA”. 
+ 
+Select * from TOURISTS  
+Where TID in(select TID from VISIT V,PLACE P 
+Where V.PID=P.PID and state='Karnataka' 
+GROUP BY V.TID having count 
+(distinct Pname) = (Select count(*) from PLACE  
+Where state='Karnataka'));
+
+-------------------------------------------------------------------------------------
+TID  TName  Age  Country 
+T001  Oh hane  35  South Korea 
+-------------------------------------------------------------------------------------
+
+iv. Display the details of the tourists visited at least one tourist place of the state, 
+but visited all states tourist places. 
+ 
+Select * from TOURISTS t where (select count(distinct state)from VISIT V,PLACE P 
+where V.PID=P.PID and t.TID=V.TID)=(Select count (distinct state) from PLACE);
+
+-------------------------------------------------------------------------------------
+TID  TName  Age  Country 
+T005  Tanushree  22  India 
+-------------------------------------------------------------------------------------
+
+v. Display the details of the tourist place visited by the tourists of all country. 
+ 
+Select * from PLACE P 
+where (select count(distinct Country) 
+from VISIT V, TOURISTS T 
+where V.PID = P.PID and T.TID=V.TID)= 
+(select count(distinct Country)from TOURISTS);
+
+-------------------------------------------------------------------------------------
+PID  Pname  State  Distance  History 
+P009  Tajmahal  Delhi  896  Shahjahan
+-------------------------------------------------------------------------------------

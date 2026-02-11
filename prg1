@@ -1,0 +1,273 @@
+Create the following tables with properly specifying Primary keys, Foreign 
+keys and solve the following queries. 
+
+create table BRANCH
+(
+branchid varchar(10)primary key,
+branchname varchar(10),
+hod varchar(10)
+);
+
+insert into branch (branchid,branchname,hod)
+values('B01','MCA','ADO');
+
+--------------------------------------------------------------------------------------------
+BRANCHID	BRANCHNAME	HOB
+B01		MCA		ADO
+B02		MBA		ABC
+B03		Mtech		xyz
+B04		BE		PQR
+B05		Bcom		MNO
+--------------------------------------------------------------------------------------------
+create table STUDENT
+(
+usn varchar(10)primary key,
+name varchar(10),
+adress varchar(50),
+branchid varchar(10)references BRANCH,
+sem number(1)
+);
+
+DESCR STUDENT
+
+	insert into STUDENT(usn, name, adress, branchid, sem)
+	values('4JN17MCA37', 'suraksha', '#20, vinobam', 'B01',2);
+
+	insert into STUDENT(usn, name, adress, branchid, sem)
+	values('4JN17MCA08', 'anamya', '#5, hudco', 'B01',1);
+
+	insert into STUDENT(usn, name, adress, branchid, sem)
+	values('4JN17MCA10', 'namitha', '#, gopala', 'B02',2);
+
+	insert into STUDENT(usn, name, adress, branchid, sem)
+	values('4JN17MCA01', 'samanya', '#, bhadravathi', 'B02',1);
+
+	select * from student;
+--------------------------------------------------------------------------------------------
+USN		NAME	ADRESS		BRANCHID	SEM
+4JN17MCA11	jishi	#9,kalalli		B01		2
+4JN17MCA37	suraksha	#20, vinobam	B01		2
+4JN17MCA08	anamya	#5, hudco		B01		1
+4JN17MCA10	namitha	#, gopala		B02		2
+4JN17MCA01	samanya	#, bhadravathi	B02		1
+--------------------------------------------------------------------------------------------
+
+create table AUTHOR
+(
+authorid varchar(10)primary key,
+authorname varchar(20),
+country varchar(10),
+age number(2)
+);
+
+DESCR AUTHOR
+	insert into author(authorid, authorname, country, age)
+	values('A01', 'elmasri navathe', 'india', '44');
+
+	insert into author(authorid, authorname, country, age)
+	values('A02', 'balguru swami', 'india', '50');
+
+	insert into author(authorid, authorname, country, age)
+	values('A03', 'girimaldi', 'india', '40');
+
+	insert into author(authorid, authorname, country, age)
+	values('A04', 'sumitabadas', 'india', '36');
+
+	insert into author(authorid, authorname, country, age)
+	values('A05', 'K R venugopa', 'india', '54');
+
+	insert into author(authorid, authorname, country, age)
+	values('A06', 'dennis richic', 'india', '60');
+
+	select * from author
+--------------------------------------------------------------------------------------------
+AUTHORID	AUTHORNAME	COUNTRY	AGE
+A01		elmasri navathe	india		44
+A02		balguru swami	india		50
+A03		girimaldi		india		40
+A04		sumitabadas	india		36
+A05		K R venugopa	india		54
+A06		dennis richic	india		60
+--------------------------------------------------------------------------------------------
+
+create table BOOK 
+(
+bookid varchar(10)primary key,
+bookname varchar(10),
+authorid varchar(10)references author,
+publisher varchar(10),
+branchid varchar(10)references branch
+);
+
+DESCR BOOK;
+
+	insert into book(bookid, bookname, authorid, publisher, branchid)
+	values('BK01','DBMS','A01','KJF','B01');
+
+	insert into book(bookid, bookname, authorid, publisher, branchid)
+	values('BK02','OOP','A05','UVW','B01');
+
+	insert into book(bookid, bookname, authorid, publisher, branchid)
+	values('BK03','DMS','A03','KJF','B01');
+
+	insert into book(bookid, bookname, authorid, publisher, branchid)
+	values('BK04','UNIX','A04','OPQ','B01');
+
+	insert into book(bookid, bookname, authorid, publisher, branchid)
+	values('BK05','C++','A02','KJF','B01');
+
+	select * from book;
+--------------------------------------------------------------------------------------------
+BOOKID	BOOKNAME	AUTHORID	PUBLISHER	BRANCHID
+BK01	DBMS		A01		KJF		B01
+BK02	OOP		A05		UVW		B01
+BK03	DMS		A03		KJF		B01
+BK04	UNIX		A04		OPQ		B01
+BK05	C++		A02		KJF		B01
+--------------------------------------------------------------------------------------------
+
+create table BORROW
+(
+usn varchar(10)references STUDENT,
+bookid varchar(10)references BOOK,
+borrowdate date
+);
+
+DESCR BORROW;
+
+	insert into borrow (usn,bookid, borrowdate)
+	values('4JN17MCA11','BK01', '03-APR-18');
+	
+	insert into borrow (usn,bookid, borrowdate)
+	values('4JN17MCA11','BK03', '04-MAR-18');
+
+	insert into borrow (usn,bookid, borrowdate)
+	values('4JN17MCA37','BK02', '11-JAN-18');
+
+	insert into borrow (usn,bookid, borrowdate)
+	values('4JN17MCA08','BK04', '05-FEB-18');
+
+	insert into borrow (usn,bookid, borrowdate)
+	values('4JN17MCA37','BK01', '14-JUN-18');
+
+	insert into borrow (usn,bookid, borrowdate)
+	values('4JN17MCA11','BK05', '11-MAY-18');
+	
+	select * from borrow;
+--------------------------------------------------------------------------------------------
+USN		BOOKID		BORROWDATE
+4JN17MCA11	BK01		03-APR-18
+4JN17MCA11	BK03		04-MAR-18
+4JN17MCA37	BK02		11-JAN-18
+4JN17MCA08	BK04		05-FEB-18
+4JN17MCA37	BK01		14-JUN-18
+4JN17MCA11	BK05		11-MAY-18
+
+--------------------------------------------------------------------------------------------
+
+FOLLOWING Q
+
+a).list the details of student who are all studying in 2nd sem MCA
+
+	select usn, name,adress
+	from STUDENT s, BRANCH b
+	where s.branchid=b.branchid and sem=2 and branchname='MCA';
+--------------------------------------------------------------------------------------------
+USN		NAME		ADRESS
+4JN17MCA11	jishi		#9,kalalli
+4JN17MCA37	suraksha		#20, vinobam
+--------------------------------------------------------------------------------------------
+
+b). list the student who are not borrowed only books
+
+	select name 
+	from STUDENT s
+	where NOT EXISTS
+	(select * from BORROW b where usn=s.usn);
+--------------------------------------------------------------------------------------------
+NAME
+samanya
+namitha
+--------------------------------------------------------------------------------------------
+
+c).display the usn, studentname, branchname, bookname, authorname, books borrowed date fo 2nd sem MCA student.
+
+	select s.usn, name, branchname, bookname, authorname, borrowdate 
+	from BRANCH b, STUDENT s, BOOK bk, AUTHOR a, BORROW br
+	where s.branchid=b.branchid and br.usn=s.usn and bk.bookid=br.bookid and bk.authorid=a.authorid and sem=2 and 	branchname='MCA';
+--------------------------------------------------------------------------------------------
+USN		NAME	BRANCHNAME	BOOKNAME	AUTHORNAME	BORROWDATE
+4JN17MCA11	jishi	MCA		DBMS		elmasri navathe	03-APR-18
+4JN17MCA11	jishi	MCA		DMS		girimaldi		04-MAR-18
+4JN17MCA37	suraksha	MCA		OOP		K R venugopa	11-JAN-18
+4JN17MCA37	suraksha	MCA		DBMS		elmasri navathe	14-JUN-18
+4JN17MCA11	jishi	MCA		C++		balguru swami	11-MAY-18
+--------------------------------------------------------------------------------------------
+
+d).display the bumber fo books written by each author.
+	
+	select authorname, count(*)
+	from author a, book bk
+	where a.authorid=bk.authorid
+	group by authorname;
+--------------------------------------------------------------------------------------------
+AUTHORNAME	COUNT(*)
+K R venugopa	1
+balguru swami	1
+elmasri navathe	1
+girimaldi		1
+sumitabadas	1
+--------------------------------------------------------------------------------------------
+
+e).display the student details who borrowed more then two books.
+
+	select * from STUDENT s
+	where(select count(*)
+	from BORROW br
+	where br.usn=s.usn)>2;
+--------------------------------------------------------------------------------------------
+USN		NAME	ADRESS	BRANCHID	SEM
+4JN17MCA11	jishi	#9,kalalli	B01		2
+--------------------------------------------------------------------------------------------
+
+f).display the book names in descending order of their names
+
+	select * from STUDENT s
+	where(select count(DISTINCT a.authorid)
+	from BOOK bk, AUTHOR a, BORROW br
+	where bk.authorid=a.authorid and br.bookid=bk.bookid and br.usn=s.usn)>1;
+--------------------------------------------------------------------------------------------
+USN		NAME	ADRESS		BRANCHID	SEM
+4JN17MCA11	jishi	#9,kalalli		B01		2
+4JN17MCA37	suraksha	#20, vinobam	B01		2
+--------------------------------------------------------------------------------------------
+
+g).display the book names in descending order fo their names
+
+	select bookname
+	from book
+	ORDER BY bookname desc;
+--------------------------------------------------------------------------------------------
+BOOKNAME
+UNIX
+OOP
+DMS
+DBMS
+C++
+--------------------------------------------------------------------------------------------
+
+h).list the details of students who borrowed the books which are all published by the same publisher.
+
+	select * from STUDENT s 
+	where(select count(DISTINCT publisher)
+	from BOOK bk, BORROW br
+	where br.bookid=bk.bookid and br.usn=s.usn)=1 and usn in 
+	(select usn from BORROW GROUP BY usn HAVING count(*)>1);
+
+--------------------------------------------------------------------------------------------
+USN		NAME	ADRESS	BRANCHID	SEM
+4JN17MCA11	jishi	#9,kalalli	B01		2
+--------------------------------------------------------------------------------------------
+
+DROP TABLE STUDENT;
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
